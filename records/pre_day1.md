@@ -1,7 +1,7 @@
-# preDay 1の記録
+# pre-Day1 Notes
 
-## 今日の目標
+## Today's Goals
 
-## 学んだこと
+## What I Learned
 
-## 次に試したいこと
+## What I Want to Try Next

@@ -1,27 +1,27 @@
-# --- ビルド用ステージ ---
+# --- Build stage ---
 FROM python:3.12-slim AS builder
 
 WORKDIR /app
 
-# 仮想環境を作成
+# Create a virtual environment
 RUN python -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 
 COPY requirements.txt .
-# && で順番に実行
+# Use && to execute the commands in sequence
 RUN pip install --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
 
 
-# --- 実行用ステージ ---
+# --- Runtime stage ---
 FROM python:3.12-slim AS runner
 WORKDIR /app
 
-# ビルドステージから仮想環境ごとコピー
+# Copy the entire virtual environment from the build stage
 COPY --from=builder /opt/venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 
-# アプリケーションコードを配置
+# Copy the application code into place
 COPY . /app/
 
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]

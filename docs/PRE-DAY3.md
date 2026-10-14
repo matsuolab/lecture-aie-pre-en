@@ -1,76 +1,76 @@
-# 次回の準備課題
+# Preparation Assignment for the Next Session
 
-今回の課題は、前回用意した`pre_day2/template.md`と`pre_day2/generate.sh`を使います。課題の所要時間の目安は合計30分です。提出はありません。課題のあとに、次回使う大きなファイルを先に取り込む「次回の準備」もあります。こちらは課題とは別の作業で、30分には含みません。
+This assignment uses `pre_day2/template.md` and `pre_day2/generate.sh`, which you prepared last time. The assignment should take about 30 minutes in total. There is nothing to submit. After the assignment, there is also a "Preparation for the Next Session" section for downloading the large files you will need next time in advance. That is a separate task and is not included in the 30 minutes.
 
-## 課題
+## Assignment
 
-レポートに「実行したマシン」の欄を足してください。そのうえで、手元のCodespaceとGitHub Actionsの両方でレポートを生成し、記録された二つの値を見比べます。Codespaceで生成した値は、GitHub側の結果を取り込むと上書きされるので、先にメモへ控えておいてください。
+Add a "Machine that ran the script" field to the report. Then generate the report in both your Codespace and GitHub Actions, and compare the two recorded values. The value generated in Codespace will be overwritten when you pull the results from GitHub, so write it down first.
 
-使う操作は、今日の実習と同じです。次の条件を守って進めてください。
+Use the same operations as in today's practice. Follow these conditions as you work.
 
-- 今日と同じ`master`から、課題用のbranchを作って作業する。
-- 変更はPull Requestで`master`へ取り込む。
-- commitするのは`pre_day2`の`template.md`、`generate.sh`、`report.md`の三つだけ。
-- 取り込んだあと、Codespaceの`master`にもGitHub側の結果を取り込んでおく。
+- Create a branch for the assignment from `master`, as you did today, and work on that branch.
+- Merge your changes into `master` through a Pull Request.
+- Commit only the three files in `pre_day2`: `template.md`, `generate.sh`, and `report.md`.
+- After merging, also pull the results from GitHub into `master` in your Codespace.
 
-## 足す行
+## Lines to Add
 
-足す行は次の枠のとおりです。枠の中身を、指定の位置へそのまま写してください。
+The lines to add are shown in the following blocks. Copy the contents exactly into the specified positions.
 
 ### template.md
 
-「確認日時」の行の次へ足します。
+Add this after the "Checked at (UTC)" line.
 
 ```
-実行したマシン: {{MACHINE_NAME}}
+Machine that ran the script: {{MACHINE_NAME}}
 ```
 
 ### generate.sh
 
-`checked_at=`の行の次へ足します。`#`で始まる行は、何をしているかの説明書きです。
+Add this after the `checked_at=` line. Lines beginning with `#` are comments explaining what the code does.
 
 ```
-    # 実行しているマシンの識別名を、machine_name に入れます。
-    # /proc/sys/kernel/hostname は、マシンが自分の識別名を書いているファイルです。
+    # Store the identifier of the machine running the script in machine_name.
+    # /proc/sys/kernel/hostname is the file where the machine records its own identifier.
     machine_name=$(cat /proc/sys/kernel/hostname)
 ```
 
-`{{HTTP_STATUS}}`を置き換える`sed`の行の前へ、次の一行を足します。`template.md`に足した印`{{MACHINE_NAME}}`を、上で取り出した識別名に置き換える指定です。
+Add the following line before the `sed` line that replaces `{{HTTP_STATUS}}`. It replaces the `{{MACHINE_NAME}}` placeholder you added to `template.md` with the identifier obtained above.
 
 ```
         -e "s|{{MACHINE_NAME}}|$machine_name|g" \
 ```
 
-この行は、前後の`sed`の行と合わせて一つの命令です。行末の`\`（バックスラッシュ）は「命令が次の行へ続く」という印なので、必ず含めてください。また、この行の前後には説明書きの行を入れないでください。命令の途中に入れると、そこで命令が切れてしまいます。
+This line forms a single command together with the surrounding `sed` lines. The `\` (backslash) at the end means "the command continues on the next line," so be sure to include it. Also, do not insert comment lines immediately before or after this line. A comment inserted in the middle of the command will break it at that point.
 
-## 注意点
+## Things to Watch Out For
 
-- `generate.sh`に足した`sed`の行の、行末の`\`を消さないでください。消えると、`./generate.sh`が何も表示しないまま止まります。そうなったら`Ctrl`キーを押しながら`C`キーを押して中断し、`\`を足して保存し直してから、もう一度実行します。
-- Actionsで赤くなったstepがあれば、最初に赤くなったstepのエラーを読みます。原因の多くは、足した行の写し間違いか、位置のずれです。Pull Requestはもう取り込み済みなので、同じPull Requestでは直せません。手元の`master`を最新にしてから新しいbranchを作り、そこで直して、同じ流れでもう一度取り込みます。
-- Codespaceの値とGitHub Actionsの値は、違っていて正解です。同じ場合は、控え違いがないか確かめてください。
+- Do not delete the trailing `\` on the `sed` line you added to `generate.sh`. Without it, `./generate.sh` will hang without displaying anything. If this happens, hold `Ctrl` and press `C` to interrupt it, add the `\` back, save the file, and run it again.
+- If a step turns red in Actions, read the error in the first step that turned red. The cause is usually a copying mistake or a line inserted in the wrong place. Since the Pull Request has already been merged, you cannot fix it through that same Pull Request. Update your local `master`, create a new branch, fix the problem there, and merge again using the same process.
+- The Codespace and GitHub Actions values are supposed to differ. If they are the same, check whether you wrote down the wrong value.
 
-## 自己採点
+## Self-Check
 
-次の項目をすべて満たしていれば、課題は完成です。確かめ方も書いてあるので、一つずつ確かめてください。
+The assignment is complete when all the following items are satisfied. Each item includes a way to check it, so verify them one at a time.
 
-- [ ] 課題用のbranchからのPull Requestで取り込んでいて、変更したファイルは`pre_day2`の三つだけ。（そのPull Requestの`Files changed`で確かめる）
-- [ ] GitHub Actionsでの生成が成功している。（Repositoryの`Actions`で、取り込み後に始まった`Update report`の実行が緑色になっている。取り込んだ直後は実行中の表示なので、終わるまで待つ）
-- [ ] Codespaceの`master`にGitHub側の結果を取り込んである。（`git status`を実行すると、`master`にいて、記録されていない変更がない）
-- [ ] `report.md`に「実行したマシン: 」の行があり、後ろに値が入っている。（`cat pre_day2/report.md`で表示し、行があること、`{{MACHINE_NAME}}`のままではないことを見る）
-- [ ] その値が、Codespaceで生成したときに控えた値と違っている。（取り込んだ`report.md`の値はGitHub Actions側で生成されたもの）
+- [ ] Your changes were merged through a Pull Request from the assignment branch, and only the three files in `pre_day2` were changed. (Check `Files changed` in that Pull Request.)
+- [ ] Report generation succeeded in GitHub Actions. (In your repository's `Actions`, the `Update report` run started after the merge is green. Immediately after the merge, it will still be running, so wait for it to finish.)
+- [ ] You have pulled the results from GitHub into `master` in your Codespace. (Running `git status` shows that you are on `master` and have no uncommitted changes.)
+- [ ] `report.md` has a "Machine that ran the script: " line with a value after it. (Display it with `cat pre_day2/report.md` and check that the line exists and the value is no longer `{{MACHINE_NAME}}`.)
+- [ ] That value differs from the one you wrote down when generating the report in Codespace. (The value in the pulled `report.md` was generated by GitHub Actions.)
 
-## 次回の準備
+## Preparation for the Next Session
 
-ここからは課題ではなく、次回のための作業です。次回使う大きなファイルを、先に取り込んでおきます。
+From here on, the work is preparation for the next session, separate from the assignment. Download the large files you will use next time in advance.
 
-Repositoryには、準備用のプログラム`pre_day3/prepare.sh`が最初から入っています。Codespaceのターミナルで、Repositoryの先頭から次を実行します。
+The repository already includes the preparation program, `pre_day3/prepare.sh`. Run the following from the repository root in your Codespace terminal.
 
 ```sh
 ./pre_day3/prepare.sh
 ```
 
-数分かかることがあります。`準備ができました`と表示されれば完了です。エラーで止まった場合は、表示に書かれている次の行動（しばらく待つ、容量を空ける、もう一度実行するなど）に従ってください。
+This may take several minutes. When `Preparation complete` appears, you are done. If it stops with an error, follow the next steps shown in the message (such as waiting a while, freeing disk space, or running it again).
 
-時間が取れず実行できなかった場合も、次回の最初に同じコマンドを実行すれば続けられます。ただし取り込みには最大で10分ほどかかるので、次回はその分の時間を余分に見ておいてください。
+If you do not have time to run it beforehand, you can still continue by running the same command at the beginning of the next session. However, downloading can take up to about 10 minutes, so allow that much extra time next time.
 
-次回は、今回記録した「実行したマシン」のしくみを、Dockerの中で動かします。
+Next time, you will use Docker to run the mechanism behind the "Machine that ran the script" value you recorded in this assignment.

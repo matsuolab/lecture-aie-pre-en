@@ -1,3 +1,3 @@
-# 次に取り組む課題
+# Next Tasks
 
-## これから試すこと
+## Things to Try Next

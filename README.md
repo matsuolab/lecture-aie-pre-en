@@ -1,4 +1,4 @@
-# AIEプレ講座 学習記録
+# AI Engineering Pilot Course Learning Log
 
-- [preDay 1の記録](records/pre_day1.md)
-- [次に取り組む課題](tasks.md)
+- [pre-Day1 Notes](records/pre_day1.md)
+- [Next Tasks](tasks.md)
